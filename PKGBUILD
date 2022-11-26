@@ -80,7 +80,7 @@ void main() { printf("%u\n", __GNUC__); }' | gcc -x c - -o /tmp/getgccversion  &
     msg "KERNEL_SOURCES=$srcdir/linux-${RKVER}"
     msg "INSTALL_MOD_PATH=$pkgdir"
     ./configure --kernel-sources="$srcdir/linux-${RKVER}" \
-                --no-drivers=mlx5 \
+                --no-drivers=mlx5,virtio_net.c \
                 --driver-suffix="_netmap" \
                 --enable-ptnetmap \
                 --install-mod-path="$pkgdir/usr" \
