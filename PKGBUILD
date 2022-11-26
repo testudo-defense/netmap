@@ -18,13 +18,18 @@ replaces=()
 backup=()
 options=()
 install="netmap.install"
-source=("netmap.install" "git+https://github.com/luigirizzo/netmap")
+source=("netmap.install" "remove-bad-test.diff" "git+https://github.com/luigirizzo/netmap")
 noextract=()
-md5sums=("c3c8b895640a32f3085cc82c2c57a526" "SKIP")
+md5sums=("c3c8b895640a32f3085cc82c2c57a526" "677f4602d2c5c8e11a23f321a3ddac2c" "SKIP")
 
 pkgver() {
         cd "$srcdir/${pkgname%-git}"
         printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+        cd "$srcdir/${pkgname%-git}"
+        patch -p0 < ../../remove-bad-test.diff
 }
 
 build() {

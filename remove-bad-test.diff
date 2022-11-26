@@ -1,0 +1,11 @@
+--- utils/ctrl-api-test.c	2022-11-26 16:06:49.000614139 -0500
++++ utils/ctrl-api-test.c	2022-11-26 15:55:42.967253424 -0500
+@@ -2048,7 +2048,7 @@
+ 	decltest(pipe_pools_info_get),
+ 	decltest(vale_polling_enable_disable),
+ 	decltest(unsupported_option),
+-	decltest(infinite_options),
++//	decltest(infinite_options),
+ #ifdef CONFIG_NETMAP_EXTMEM
+ 	decltest(extmem_option),
+ 	decltest(bad_extmem_option),
