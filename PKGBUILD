@@ -4,7 +4,7 @@
 # Maintainer: Vincenzo Maffione <v.maffione@gmail.com>
 pkgname=netmap
 pkgver=r3882.88ad54aa
-pkgrel=4
+pkgrel=5
 pkgdesc="A framework for high speed network packet I/O, using kernel bypass"
 arch=('any')
 url="http://info.iet.unipi.it/~luigi/netmap"
@@ -18,9 +18,9 @@ replaces=()
 backup=()
 options=()
 install="netmap.install"
-source=("netmap.install" "remove-bad-test.diff" "ixgbe-5.15.2-bcaine.tar.gz" "git+https://github.com/luigirizzo/netmap")
+source=("netmap.install" "remove-bad-test.diff" "adding-fpic-flag.diff" "ixgbe-5.15.2-bcaine.tar.gz" "git+https://github.com/luigirizzo/netmap")
 noextract=()
-md5sums=("c3c8b895640a32f3085cc82c2c57a526" "20d2dcb7bdbb3d67bace4156352e0114" "0a17294ff147aeb882a31d0204d2930e" "SKIP")
+md5sums=("c3c8b895640a32f3085cc82c2c57a526" "20d2dcb7bdbb3d67bace4156352e0114" "bdc6292ec2d7aa376f12e35b55628843" "0a17294ff147aeb882a31d0204d2930e" "SKIP")
 
 pkgver() {
         cd "$srcdir/${pkgname%-git}"
@@ -30,6 +30,7 @@ pkgver() {
 prepare() {
         cd "$srcdir/${pkgname%-git}"
         patch -p0 < ../../remove-bad-test.diff
+        patch -p0 < ../../adding-fpic-flag.diff
         cp ../../ixgbe-5.15.2-bcaine.tar.gz LINUX/ext-drivers/ixgbe-5.15.2.tar.gz
 }
 
