@@ -3,8 +3,8 @@
 
 # Maintainer: Vincenzo Maffione <v.maffione@gmail.com>
 pkgname=netmap
-pkgver=r3882.88ad54aa
-pkgrel=5
+pkgver=r4644.d6c9227a
+pkgrel=1
 pkgdesc="A framework for high speed network packet I/O, using kernel bypass"
 arch=('any')
 url="http://info.iet.unipi.it/~luigi/netmap"
@@ -20,7 +20,7 @@ options=()
 install="netmap.install"
 source=("netmap.install" "remove-bad-test.diff" "adding-fpic-flag.diff" "ixgbe-5.15.2-bcaine.tar.gz" "git+https://github.com/luigirizzo/netmap")
 noextract=()
-md5sums=("c3c8b895640a32f3085cc82c2c57a526" "20d2dcb7bdbb3d67bace4156352e0114" "bdc6292ec2d7aa376f12e35b55628843" "0a17294ff147aeb882a31d0204d2930e" "SKIP")
+md5sums=("c3c8b895640a32f3085cc82c2c57a526" "20d2dcb7bdbb3d67bace4156352e0114" "bdc6292ec2d7aa376f12e35b55628843" "da00e8084235f1929ca58bd809a79719" "SKIP")
 
 pkgver() {
         cd "$srcdir/${pkgname%-git}"
