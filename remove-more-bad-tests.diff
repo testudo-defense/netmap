@@ -1,5 +1,5 @@
---- a/utils/ctrl-api-test.c
-+++ b/utils/ctrl-api-test.c
+--- utils/ctrl-api-test.c
++++ utils/ctrl-api-test.c
 @@ -1010,6 +1010,7 @@ unsupported_option(struct TestContext *ctx)
  static int
  infinite_options(struct TestContext *ctx)

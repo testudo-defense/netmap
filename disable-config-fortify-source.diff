@@ -1,5 +1,5 @@
---- a/LINUX/bsd_glue.h
-+++ b/LINUX/bsd_glue.h
+--- LINUX/bsd_glue.h
++++ LINUX/bsd_glue.h
 @@ -32,6 +32,10 @@
  #ifndef NETMAP_BSD_GLUE_H
  #define NETMAP_BSD_GLUE_H
