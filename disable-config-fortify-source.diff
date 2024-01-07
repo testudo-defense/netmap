@@ -1,0 +1,13 @@
+--- a/LINUX/bsd_glue.h
++++ b/LINUX/bsd_glue.h
+@@ -32,6 +32,10 @@
+ #ifndef NETMAP_BSD_GLUE_H
+ #define NETMAP_BSD_GLUE_H
+
++#ifdef CONFIG_FORTIFY_SOURCE
++#undef CONFIG_FORTIFY_SOURCE
++#endif
++
+ /* a set of headers used in netmap */
+ #include <linux/version.h>
+
