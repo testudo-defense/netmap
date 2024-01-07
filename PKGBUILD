@@ -20,7 +20,7 @@ options=()
 install="netmap.install"
 source=("netmap.install" "remove-bad-test.diff" "remove-more-bad-tests.diff" "adding-fpic-flag.diff" "disable-config-fortify-source.diff" "ixgbe-5.15.2-bcaine.tar.gz" "git+https://github.com/luigirizzo/netmap")
 noextract=()
-md5sums=("c3c8b895640a32f3085cc82c2c57a526" "20d2dcb7bdbb3d67bace4156352e0114" "da7f2045f20ff2e19a1cca58e6510af8" "bdc6292ec2d7aa376f12e35b55628843" "3243038bfa061df88bb4c9540f608c4b" "0a17294ff147aeb882a31d0204d2930e" "SKIP")
+md5sums=("c3c8b895640a32f3085cc82c2c57a526" "20d2dcb7bdbb3d67bace4156352e0114" "77763b4ff68a5c6ccd1b883109f3a1a5" "bdc6292ec2d7aa376f12e35b55628843" "6f144fd01e09bdd74de17ce8e4c3ea8a" "0a17294ff147aeb882a31d0204d2930e" "SKIP")
 
 pkgver() {
         cd "$srcdir/${pkgname%-git}"
