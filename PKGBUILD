@@ -18,9 +18,21 @@ replaces=()
 backup=()
 options=()
 install="netmap.install"
-source=("netmap.install" "remove-bad-test.diff" "adding-fpic-flag.diff" "ixgbe-5.15.2-bcaine.tar.gz" "git+https://github.com/luigirizzo/netmap")
+source=("netmap.install"
+        "remove-bad-test.diff"
+        "remove-more-bad-tests.diff"
+        "adding-fpic-flag.diff"
+        "disable-config-fortify-source.diff"
+        "ixgbe-5.15.2-bcaine.tar.gz"
+        "git+https://github.com/luigirizzo/netmap")
 noextract=()
-md5sums=("c3c8b895640a32f3085cc82c2c57a526" "20d2dcb7bdbb3d67bace4156352e0114" "bdc6292ec2d7aa376f12e35b55628843" "da00e8084235f1929ca58bd809a79719" "SKIP")
+md5sums=("c3c8b895640a32f3085cc82c2c57a526" # netmap.install
+         "20d2dcb7bdbb3d67bace4156352e0114" # remove-bad-test.diff
+         "a193fcd4826cf0dcec64e0bd3ac3c705" # remove-more-bad-tests.diff
+         "bdc6292ec2d7aa376f12e35b55628843" # adding-fpic-flag.diff
+         "6f144fd01e09bdd74de17ce8e4c3ea8a" # disable-config-fortify-source.diff
+         "da00e8084235f1929ca58bd809a79719" # ixgbe-5.15.2-bcaine.tar.gz
+         "SKIP") # netmap
 
 pkgver() {
         cd "$srcdir/${pkgname%-git}"
@@ -30,7 +42,9 @@ pkgver() {
 prepare() {
         cd "$srcdir/${pkgname%-git}"
         patch -p0 < ../../remove-bad-test.diff
+        patch -p0 < ../../remove-more-bad-tests.diff
         patch -p0 < ../../adding-fpic-flag.diff
+        patch -p0 < ../../disable-config-fortify-source.diff
         cp ../../ixgbe-5.15.2-bcaine.tar.gz LINUX/ext-drivers/ixgbe-5.15.2.tar.gz
 }
 
