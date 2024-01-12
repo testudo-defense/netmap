@@ -31,7 +31,7 @@ md5sums=("c3c8b895640a32f3085cc82c2c57a526" # netmap.install
          "a193fcd4826cf0dcec64e0bd3ac3c705" # remove-more-bad-tests.diff
          "bdc6292ec2d7aa376f12e35b55628843" # adding-fpic-flag.diff
          "6f144fd01e09bdd74de17ce8e4c3ea8a" # disable-config-fortify-source.diff
-         "da00e8084235f1929ca58bd809a79719" # ixgbe-5.15.2-bcaine.tar.gz
+         "1585c65e5912f4d45f3c2bbe70ef3af3" # ixgbe-5.15.2-bcaine.tar.gz
          "SKIP") # netmap
 
 pkgver() {
