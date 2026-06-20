@@ -1,0 +1,12 @@
+*** libnetmap/GNUmakefile	2022-12-07 20:22:08.453407494 -0500
+--- libnetmap/GNUmakefile	2022-12-07 20:27:42.186742439 -0500
+***************
+*** 3,8 ****
+--- 3,9 ----
+  CFLAGS=-O2 -pipe -Wall -Werror
+  CFLAGS +=-g
+  CFLAGS += -I $(SRCDIR)/sys
++ CFLAGS += -fPIC
+  VPATH = $(SRCDIR)/libnetmap
+  SRCS=$(notdir $(wildcard $(SRCDIR)/libnetmap/*.c))
+  OBJS=$(SRCS:.c=.o)
