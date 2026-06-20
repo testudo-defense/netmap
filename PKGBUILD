@@ -19,7 +19,6 @@ backup=()
 options=()
 install="netmap.install"
 source=("netmap.install"
-        "remove-bad-test.diff"
         "remove-more-bad-tests.diff"
         "use-veth-for-ctrl-api-test.diff"
         "adding-fpic-flag.diff"
@@ -28,7 +27,6 @@ source=("netmap.install"
         "git+https://github.com/luigirizzo/netmap")
 noextract=()
 md5sums=("c3c8b895640a32f3085cc82c2c57a526" # netmap.install
-         "20d2dcb7bdbb3d67bace4156352e0114" # remove-bad-test.diff
          "db46c39386094dc21ef0be68c0f89217" # remove-more-bad-tests.diff
          "1bcdfc41478d7638ae84b18ee765c200" # use-veth-for-ctrl-api-test.diff
          "bdc6292ec2d7aa376f12e35b55628843" # adding-fpic-flag.diff
@@ -43,7 +41,6 @@ pkgver() {
 
 prepare() {
         cd "$srcdir/${pkgname%-git}"
-        patch -p0 < ../../remove-bad-test.diff
         patch -p0 < ../../remove-more-bad-tests.diff
         patch -p0 < ../../use-veth-for-ctrl-api-test.diff
         patch -p0 < ../../adding-fpic-flag.diff
