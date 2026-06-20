@@ -22,7 +22,6 @@ source=("netmap.install"
         "remove-more-bad-tests.diff"
         "use-veth-for-ctrl-api-test.diff"
         "adding-fpic-flag.diff"
-        "disable-config-fortify-source.diff"
         "ixgbe-5.15.2-bcaine.tar.gz"
         "git+https://github.com/luigirizzo/netmap")
 noextract=()
@@ -30,7 +29,6 @@ md5sums=("c3c8b895640a32f3085cc82c2c57a526" # netmap.install
          "db46c39386094dc21ef0be68c0f89217" # remove-more-bad-tests.diff
          "1bcdfc41478d7638ae84b18ee765c200" # use-veth-for-ctrl-api-test.diff
          "bdc6292ec2d7aa376f12e35b55628843" # adding-fpic-flag.diff
-         "6f144fd01e09bdd74de17ce8e4c3ea8a" # disable-config-fortify-source.diff
          "1585c65e5912f4d45f3c2bbe70ef3af3" # ixgbe-5.15.2-bcaine.tar.gz
          "SKIP") # netmap
 
@@ -44,7 +42,6 @@ prepare() {
         patch -p0 < ../../remove-more-bad-tests.diff
         patch -p0 < ../../use-veth-for-ctrl-api-test.diff
         patch -p0 < ../../adding-fpic-flag.diff
-        patch -p0 < ../../disable-config-fortify-source.diff
         cp ../../ixgbe-5.15.2-bcaine.tar.gz LINUX/ext-drivers/ixgbe-5.15.2.tar.gz
 }
 
