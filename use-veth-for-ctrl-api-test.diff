@@ -1,0 +1,140 @@
+--- utils/ctrl-api-test.c
++++ utils/ctrl-api-test.c
+@@ -148,6 +148,7 @@ exec_command(int argc, const char *const argv[])
+ 
+ struct TestContext {
+ 	char ifname[NM_IFNAMSZ];
++	char ifpeer[NM_IFNAMSZ];
+ 	char ifname_ext[NM_IFNAMSZ];
+ 	char bdgname[NM_IFNAMSZ];
+ 	uint32_t nr_tx_slots;   /* slots in tx rings */
+@@ -2182,7 +2183,7 @@ err:
+ 	} while (0)
+ 
+ static void
+-tap_cleanup(int signo)
++iface_cleanup(int signo)
+ {
+ 	const char *av[8];
+ 	int ac = 0;
+@@ -2200,14 +2201,14 @@ tap_cleanup(int signo)
+ #endif
+ 	ARGV_APPEND(av, ac, NULL);
+ 	if (exec_command(ac, av)) {
+-		printf("Failed to destroy tap interface\n");
++		printf("Failed to destroy test interface\n");
+ 	}
+ }
+ 
+ int
+ main(int argc, char **argv)
+ {
+-	int create_tap = 1;
++	int create_iface = 1;
+ 	int num_tests;
+ 	int ret  = 0;
+ 	int j    = 0;
+@@ -2230,7 +2231,8 @@ main(int argc, char **argv)
+ 		clock_gettime(CLOCK_REALTIME, &t);
+ 		srand((unsigned int)t.tv_nsec);
+ 		idx = rand() % 8000 + 100;
+-		snprintf(ctx_.ifname, sizeof(ctx_.ifname), "tap%d", idx);
++		snprintf(ctx_.ifname, sizeof(ctx_.ifname), "veth%d", idx);
++		snprintf(ctx_.ifpeer, sizeof(ctx_.ifpeer), "vpeer%d", idx);
+ 		idx = rand() % 800 + 100;
+ 		snprintf(ctx_.bdgname, sizeof(ctx_.bdgname), "vale%d", idx);
+ 	}
+@@ -2244,7 +2246,7 @@ main(int argc, char **argv)
+ 
+ 		case 'i':
+ 			strncpy(ctx_.ifname, optarg, sizeof(ctx_.ifname) - 1);
+-			create_tap = 0;
++			create_iface = 0;
+ 			break;
+ 
+ 		case 'j':
+@@ -2256,7 +2258,7 @@ main(int argc, char **argv)
+ 
+ 		case 'l':
+ 			list = 1;
+-			create_tap = 0;
++			create_iface = 0;
+ 			break;
+ 
+ 		default:
+@@ -2285,9 +2287,9 @@ main(int argc, char **argv)
+ 		return 0;
+ 	}
+ 
+-	if (create_tap) {
++	if (create_iface) {
+ 		struct sigaction sa;
+-		const char *av[8];
++		const char *av[12];
+ 		int ac = 0;
+ #ifdef __FreeBSD__
+ 		ARGV_APPEND(av, ac, "ifconfig");
+@@ -2296,20 +2298,46 @@ main(int argc, char **argv)
+ 		ARGV_APPEND(av, ac, "up");
+ #else
+ 		ARGV_APPEND(av, ac, "ip");
+-		ARGV_APPEND(av, ac, "tuntap");
++		ARGV_APPEND(av, ac, "link");
+ 		ARGV_APPEND(av, ac, "add");
+-		ARGV_APPEND(av, ac, "mode");
+-		ARGV_APPEND(av, ac, "tap");
+-		ARGV_APPEND(av, ac, "name");
+ 		ARGV_APPEND(av, ac, ctx_.ifname);
++		ARGV_APPEND(av, ac, "type");
++		ARGV_APPEND(av, ac, "veth");
++		ARGV_APPEND(av, ac, "peer");
++		ARGV_APPEND(av, ac, "name");
++		ARGV_APPEND(av, ac, ctx_.ifpeer);
+ #endif
+ 		ARGV_APPEND(av, ac, NULL);
+ 		if (exec_command(ac, av)) {
+-			printf("Failed to create tap interface\n");
++			printf("Failed to create test interface\n");
+ 			return -1;
+ 		}
++#ifndef __FreeBSD__
++		ac = 0;
++		ARGV_APPEND(av, ac, "ip");
++		ARGV_APPEND(av, ac, "link");
++		ARGV_APPEND(av, ac, "set");
++		ARGV_APPEND(av, ac, ctx_.ifname);
++		ARGV_APPEND(av, ac, "up");
++		ARGV_APPEND(av, ac, NULL);
++		if (exec_command(ac, av)) {
++			printf("Failed to bring up test interface %s\n", ctx_.ifname);
++			goto out;
++		}
++		ac = 0;
++		ARGV_APPEND(av, ac, "ip");
++		ARGV_APPEND(av, ac, "link");
++		ARGV_APPEND(av, ac, "set");
++		ARGV_APPEND(av, ac, ctx_.ifpeer);
++		ARGV_APPEND(av, ac, "up");
++		ARGV_APPEND(av, ac, NULL);
++		if (exec_command(ac, av)) {
++			printf("Failed to bring up test interface %s\n", ctx_.ifpeer);
++			goto out;
++		}
++#endif
+ 
+-		sa.sa_handler = tap_cleanup;
++		sa.sa_handler = iface_cleanup;
+ 		sigemptyset(&sa.sa_mask);
+ 		sa.sa_flags = SA_RESTART;
+ 		ret         = sigaction(SIGINT, &sa, NULL);
+@@ -2373,7 +2401,9 @@ main(int argc, char **argv)
+ 		context_cleanup(&ctxcopy);
+ 	}
+ out:
+-	tap_cleanup(0);
++	if (create_iface) {
++		iface_cleanup(0);
++	}
+ 
+ 	return ret;
+ }
