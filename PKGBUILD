@@ -3,7 +3,7 @@
 
 # Maintainer: Vincenzo Maffione <v.maffione@gmail.com>
 pkgname=netmap
-pkgver=r4644.d6c9227a
+pkgver=r4783.5e1bb6e4
 pkgrel=1
 pkgdesc="A framework for high speed network packet I/O, using kernel bypass"
 arch=('any')
